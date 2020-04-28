@@ -1,14 +1,21 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import {normalize} from 'styled-normalize'; //wyzerowanie cssa
 import { Navigation, Wrapper, LoadingIndicator, Button } from './components/index';
 import theme from './style/theme';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
+import {connect} from 'react-redux';
+import {fetchBudget, fetchBudgetCategories} from './data/actions/budget.action';
 
+function App({budget,fetchBudget, fetchBudgetCategories}) {
+  useEffect(()=> {
+    fetchBudget(1)
+    fetchBudgetCategories(1)
+  }, [fetchBudget,fetchBudgetCategories])
+  
 
-function App() {
-  const { t, i18n} = useTranslation(); 
+  const {i18n} = useTranslation(); 
   return (
     //kazdy komponent ma dostep do obiektu theme
     <>
@@ -37,11 +44,19 @@ function App() {
   );
 }
 
+const ConnectedApp = connect(state=> { //state to common i budget
+  return {
+    budget: state.budget.budget
+}}, {
+    fetchBudget, //funcja asynchroniczna 
+    fetchBudgetCategories,
+  })(App)
+
 function RootApp() {
   return (
     <ThemeProvider theme={theme}>
       <React.Suspense fallback={<LoadingIndicator/>}>
-        <App/>
+        <ConnectedApp/>
       </React.Suspense>
     </ThemeProvider>
   )
