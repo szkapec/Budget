@@ -1,7 +1,7 @@
 import React from 'react';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import {normalize} from 'styled-normalize'; //wyzerowanie cssa
-import { Navigation, Wrapper, LoadingIndicator } from './components/index';
+import { Navigation, Wrapper, LoadingIndicator, Button } from './components/index';
 import theme from './style/theme';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
@@ -22,12 +22,12 @@ function App() {
           ]}
           RightElement={(
             <div>
-              <button onClick={()=>i18n.changeLanguage('pl')}>pl</button>
-              <button onClick={()=> i18n.changeLanguage('en')}>en</button>
+              <Button variant="inline" onClick={()=> i18n.changeLanguage('pl')}>pl</Button>
+              <Button variant="regular" onClick={()=> i18n.changeLanguage('en')}>en</Button>
             </div>
           )}/>
           <Wrapper>
-            <Switch>
+            <Switch> 
               <Route exact path="/">Home</Route>
               <Route exact path="/budget">Budget page</Route>
           </Switch>

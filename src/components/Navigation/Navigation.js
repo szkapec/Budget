@@ -1,9 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
 import {Container, List, NavigationWrapper} from './Navigation.css';
 import PropTypes from 'prop-types';
 import {useTranslation} from 'react-i18next';
-
+import Button from '../Button/Button';
 
 
 
@@ -15,8 +14,8 @@ function Navigation({items=[] , RightElement}) {
                 <List>
                     {items.map(item => (
                         <li key={item.to}>
-                            <Link to={item.to}>{t(item.content)}</Link>
-                        </li>
+                            <Button variant="inline" to={item.to}>{t(item.content)}</Button>
+                        </li>        
                     ))}
                 </List>
             </NavigationWrapper>
