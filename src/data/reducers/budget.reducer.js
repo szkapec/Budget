@@ -3,10 +3,12 @@ import {
     BUDGET_GET_REQUEST,
     BUDGET_GET_SUCCESS,
     BUDGET_GET_FAILURE,
+
     BUDGETED_CATEGORIES_GET_REQUEST,
     BUDGETED_CATEGORIES_GET_SUCCESS,
     BUDGETED_CATEGORIES_GET_FAILURE,
     LOADING_STATES,
+    
 } from '../../data/constants/index'
 
 
@@ -46,6 +48,7 @@ console.log(action, 'asction')
             }
 
 
+
         
             case BUDGETED_CATEGORIES_GET_REQUEST: 
             return {
@@ -63,11 +66,12 @@ console.log(action, 'asction')
                  budgetedCategories: action.payload,
                 loadingState: newLoadingState,
             }
+            
         case BUDGETED_CATEGORIES_GET_FAILURE: //request do api sie skonczyl
             delete newLoadingState.BUDGETED_CATEGORIES_GET_REQUEST;
             return {
                 ...state, 
-                budget: {},
+                budgetedCategories: [],
                 loadingState: newLoadingState,
             }
 

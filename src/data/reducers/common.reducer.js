@@ -12,8 +12,8 @@ const initialState = {
     allCategories: {},
 }
 
-function budget(state = initialState, action) {
-
+function common(state = initialState, action) {
+console.log(action.type)
     const newLoadingState = {...state.loadingState};
 
 
@@ -47,4 +47,4 @@ function budget(state = initialState, action) {
     }
 }
 
-export default budget;
+export default common;

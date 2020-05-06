@@ -11,7 +11,11 @@ BUDGETED_CATEGORIES_GET_FAILURE,
 import API from '../fetch/index';
 
 
- export const fetchBudget = (id) => async(dispatch) => { //funckcja ktora zwraca funkcje
+ export const fetchBudget = (id) => async (dispatch) => { //funckcja ktora zwraca funkcje
+
+    // const promise = API.budget.fetchBudget(id);
+
+
     //dispatch... akcjebudget_request
     dispatch({
         type: BUDGET_GET_REQUEST,
@@ -39,7 +43,7 @@ import API from '../fetch/index';
 
 }
 
-export const fetchBudgetCategories = (id) => async(dispatch) => {
+export const fetchBudgetCategories = (id) => async (dispatch) => {
     //dispatch... akcjebudget_request
     dispatch({
         type: BUDGETED_CATEGORIES_GET_REQUEST,
