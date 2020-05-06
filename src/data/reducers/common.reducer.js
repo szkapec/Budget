@@ -1,5 +1,5 @@
 import {
-    ALL_CATEGORIES_GET,
+
     ALL_CATEGORIES_GET_REQUEST,
     ALL_CATEGORIES_GET_SUCCESS,
     ALL_CATEGORIES_GET_FAILURE,
@@ -8,12 +8,11 @@ import {
 
 
 const initialState = {
-    loadingState: {},
+    loadingState: null,
     allCategories: {},
 }
 
 function common(state = initialState, action) {
-console.log(action.type)
     const newLoadingState = {...state.loadingState};
 
 

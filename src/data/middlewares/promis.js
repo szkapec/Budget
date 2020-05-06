@@ -4,7 +4,7 @@ import { BUDGET_GET_REQUEST } from "data/constants";
 export default function promiseMiddleware() {
     return function(next){
         return function(action) {
-            const { promise, type } = action;
+            const { promise, type, ...rest } = action;
 
             if(!promise || typeof promise.then !== 'function') {
                 return next(action);
@@ -12,7 +12,16 @@ export default function promiseMiddleware() {
             const SUCCESS = `${type}_SUCCESS`
             const FAILURE = `${type}_FAILURE`
             const REQUEST = `${type}_REQUEST`
-            next({ type: BUDGET_GET_REQUEST})
+            next({ type: REQUEST, ...rest})
+
+            return promise
+                .then(response => response.json())
+                .then(data => {
+                    next({type: SUCCESS, payload: data, ...rest})
+                })
+                .catch(error => {
+                    next({type: FAILURE, error, ...rest})
+                })
         }
     }
 }

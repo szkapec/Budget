@@ -16,5 +16,6 @@ export const Container = styled.div`
 
 export const List = styled.ul`
     display: flex;
+    align-items: center;
 `
 

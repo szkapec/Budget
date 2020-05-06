@@ -1,66 +1,56 @@
 import {
-    BUDGET_GET_REQUEST,
-    BUDGET_GET_SUCCESS,
-    BUDGET_GET_FAILURE,
+    BUDGET_GET,
+    // BUDGET_GET_REQUEST,
+    // BUDGET_GET_SUCCESS,
+    // BUDGET_GET_FAILURE,
 
-    BUDGETED_CATEGORIES_GET_REQUEST,
-BUDGETED_CATEGORIES_GET_SUCCESS,
-BUDGETED_CATEGORIES_GET_FAILURE,
+//     BUDGETED_CATEGORIES_GET_REQUEST,
+// BUDGETED_CATEGORIES_GET_SUCCESS,
+// BUDGETED_CATEGORIES_GET_FAILURE,
+BUDGETED_CATEGORIES_GET,
 } from '../../data/constants/index';
 
 import API from '../fetch/index';
 
 
- export const fetchBudget = (id) => async (dispatch) => { //funckcja ktora zwraca funkcje
+ export const fetchBudget = (id) => { //funckcja ktora zwraca funkcje
 
-    // const promise = API.budget.fetchBudget(id);
-
-
-    //dispatch... akcjebudget_request
-    dispatch({
-        type: BUDGET_GET_REQUEST,
-    })
-    //wykonac request do api
-    try {
-        console.log(id,"id")
-        
-        const response = await API.budget.fetchBudget(id); 
-        const data = await response.json() //json rowniez zwraca promise dlatego trzeba na niego zaczekac uzywajac await
-        dispatch({
-            type: BUDGET_GET_SUCCESS,
-            payload: data,
-        })
-    } catch (error) {
-        dispatch({
-            type: BUDGET_GET_FAILURE,
-        })
+    const promise = API.budget.fetchBudget(id);
+    return{ //wysylamy type oraz promise
+        type: BUDGET_GET,
+        promise
     }
- 
-
-
-    //dispatch akcje budget_success  + przekazac dane z requestu,
-
-
 }
 
-export const fetchBudgetCategories = (id) => async (dispatch) => {
+
+export const fetchBudgetCategories = (id) => {
+   
+   const promise = API.budget.fetchBudgetedCategories(id);
+   return {
+       type: BUDGETED_CATEGORIES_GET,
+       promise,
+   }
+   
+   
+   //tak bylo wczesniej przed zrobieniem milddleware
+   
     //dispatch... akcjebudget_request
-    dispatch({
-        type: BUDGETED_CATEGORIES_GET_REQUEST,
-    })
-    //wykonac request do api
-    try {
-        console.log(id,"id")
+    // dispatch({
+    //     type: BUDGETED_CATEGORIES_GET_REQUEST,
+    // })
+    // //wykonac request do api
+    // try {
+    //     console.log(id,"id")
         
-        const response = await API.budget.fetchBudgetedCategories(id); 
-        const data = await response.json() //json rowniez zwraca promise dlatego trzeba na niego zaczekac uzywajac await
-        dispatch({
-            type: BUDGETED_CATEGORIES_GET_SUCCESS,
-            payload: data,
-        })
-    } catch (error) {
-        dispatch({
-            type: BUDGETED_CATEGORIES_GET_FAILURE,
-        })
-    }
+    //     const response = await API.budget.fetchBudgetedCategories(id); 
+    //     const data = await response.json() //json rowniez zwraca promise dlatego trzeba na niego zaczekac uzywajac await
+    //     dispatch({
+    //         type: BUDGETED_CATEGORIES_GET_SUCCESS,
+    //         payload: data,
+    //     })
+    // } catch (error) {
+    //     dispatch({
+    //         type: BUDGETED_CATEGORIES_GET_FAILURE,
+    //     })
+    // }
 }

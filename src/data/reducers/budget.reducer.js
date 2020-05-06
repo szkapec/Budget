@@ -13,13 +13,12 @@ import {
 
 
 const initialState = {
-    loadingState: {},
+    loadingState: null,
     budget: {},
     budgetedCategories: [],
 }
 
 function budget(state = initialState, action) {
-console.log(action, 'asction')
     const newLoadingState = {...state.loadingState};
 
 

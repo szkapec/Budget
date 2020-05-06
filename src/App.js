@@ -5,14 +5,9 @@ import { Navigation, Wrapper, LoadingIndicator, Button } from './components/inde
 import theme from './style/theme';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
-import {connect} from 'react-redux';
-import {fetchBudget, fetchBudgetCategories} from './data/actions/budget.action';
+import Budget from './pages/Budget';
+function App() {
 
-function App({budget,fetchBudget, fetchBudgetCategories}) {
-  useEffect(()=> {
-    fetchBudget(1)
-    fetchBudgetCategories(1)
-  }, [fetchBudget,fetchBudgetCategories])
   
 
   const {i18n} = useTranslation(); 
@@ -36,7 +31,7 @@ function App({budget,fetchBudget, fetchBudgetCategories}) {
           <Wrapper>
             <Switch> 
               <Route exact path="/">Home</Route>
-              <Route exact path="/budget">Budget page</Route>
+              <Route exact path="/budget"><Budget/></Route>
           </Switch>
           </Wrapper>
       </Router>
@@ -44,19 +39,13 @@ function App({budget,fetchBudget, fetchBudgetCategories}) {
   );
 }
 
-const ConnectedApp = connect(state=> { //state to common i budget
-  return {
-    budget: state.budget.budget
-}}, {
-    fetchBudget, //funcja asynchroniczna 
-    fetchBudgetCategories,
-  })(App)
+
 
 function RootApp() {
   return (
     <ThemeProvider theme={theme}>
       <React.Suspense fallback={<LoadingIndicator/>}>
-        <ConnectedApp/>
+        <App/>
       </React.Suspense>
     </ThemeProvider>
   )
