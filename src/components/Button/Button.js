@@ -3,10 +3,9 @@ import {InlineButton, RegularButton} from './Button.css';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-export default function Button({variant, children, ...props}) {
+export default function Button({primary,variant, children, ...props}) {
     const { to } = props;
     const Component = useMemo(() => { //przekazujemy mu jako argument funkcje ktorej rezultat chcemy przypisac do zmiennej
-
         switch (variant) {
             case 'inline':
                 return InlineButton
@@ -18,7 +17,7 @@ export default function Button({variant, children, ...props}) {
     },[variant]); //kiedy zmieni sie variant dojdzie tylko wtedy do renderingu
 
     const content = useMemo(() => (
-            <Component {...props}>
+            <Component primary={primary} {...props}>
                {children}
            </Component>
     ),[props,children])

@@ -2,11 +2,11 @@
   "parentCategories": [
     {
       "id": "1",
-      "name": "Shopping"
+      "name": "Sklep"
     },
     {
       "id": "2",
-      "name": "Bills and utilities"
+      "name": "Rachunki i media"
     },
     {
       "id": "4",
@@ -17,6 +17,7 @@
       "name": "Entertainment"
     }
   ],
+
   "categories": [
     {
       "id": "1",
@@ -59,6 +60,7 @@
       "parentCategoryId": "5"
     }
   ],
+
   "budgetCategories": [
     {
       "id": "1",
@@ -97,6 +99,7 @@
       "budgetId": "1"
     }
   ],
+
   "budgets": [
     {
       "id": "1",
@@ -104,6 +107,7 @@
       "totalAmount": 2400
     }
   ],
+  
   "transactions": [
     {
       "id": "1",

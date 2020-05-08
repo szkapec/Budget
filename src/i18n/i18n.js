@@ -27,7 +27,7 @@ i18n
         const parsedData = JSON.parse(data);
         const terms = parsedData.result.terms.reduce((acc, item) => {
           acc[item.term] = item.translation.content || item.term;
-
+          
           return acc;
         }, {});
 

@@ -8,7 +8,7 @@ import React , {useState} from 'react'
         </div>
     )
 
- function ToggleableList({ items, children }) {
+ function ToggleableList({ items }) {
      const [selectedItem, setSelectedItem] = useState()
     return (
         <>

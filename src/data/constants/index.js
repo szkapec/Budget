@@ -6,6 +6,8 @@ export const LOADING_STATES = {
     LOADING: 'LOADING',
     LOADED: 'LOADED',
     FAILED: 'FAILED',
+
+    
 }
 
 export default {

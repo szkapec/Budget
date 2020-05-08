@@ -8,6 +8,7 @@ import {
 // BUDGETED_CATEGORIES_GET_SUCCESS,
 // BUDGETED_CATEGORIES_GET_FAILURE,
 BUDGETED_CATEGORIES_GET,
+SET_SELECTED_PARENT_CATEGORY_ID,
 } from '../../data/constants/index';
 
 import API from '../fetch/index';
@@ -30,7 +31,13 @@ export const fetchBudgetCategories = (id) => {
        type: BUDGETED_CATEGORIES_GET,
        promise,
    }
-   
+}
+export const selectParentCategory = (id) => { //zwraca do reduxa
+    return {
+        type: SET_SELECTED_PARENT_CATEGORY_ID,
+        payload: id,
+    }
+}
    
    //tak bylo wczesniej przed zrobieniem milddleware
    
@@ -53,4 +60,3 @@ export const fetchBudgetCategories = (id) => {
     //         type: BUDGETED_CATEGORIES_GET_FAILURE,
     //     })
     // }
-}

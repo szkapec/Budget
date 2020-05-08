@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useCallback } from 'react';
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import {normalize} from 'styled-normalize'; //wyzerowanie cssa
 import { Navigation, Wrapper, LoadingIndicator, Button } from './components/index';
@@ -11,6 +11,9 @@ function App() {
   
 
   const {i18n} = useTranslation(); 
+  const changeLanguage = useCallback(lng => {
+    i18n.changeLanguage(lng);
+  }, [i18n]);
   return (
     //kazdy komponent ma dostep do obiektu theme
     <>
@@ -24,8 +27,8 @@ function App() {
           ]}
           RightElement={(
             <div>
-              <Button variant="inline" onClick={()=> i18n.changeLanguage('pl')}>pl</Button>
-              <Button variant="regular" onClick={()=> i18n.changeLanguage('en')}>en</Button>
+              <Button variant="inline" primary={i18n.language === 'pl'} onClick={()=> changeLanguage('pl')}>pl</Button>
+              <Button variant="regular"  primary={i18n.language === 'en'} onClick={() => changeLanguage('en')}>en</Button>
             </div>
           )}/>
           <Wrapper>
