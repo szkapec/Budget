@@ -9,6 +9,7 @@ import {
 // BUDGETED_CATEGORIES_GET_FAILURE,
 BUDGETED_CATEGORIES_GET,
 SET_SELECTED_PARENT_CATEGORY_ID,
+BUDGET_TRANSACTION_ADD,
 } from '../../data/constants/index';
 
 import API from '../fetch/index';
@@ -36,6 +37,18 @@ export const selectParentCategory = (id) => { //zwraca do reduxa
     return {
         type: SET_SELECTED_PARENT_CATEGORY_ID,
         payload: id,
+    }
+}
+
+export const addTransaction = ({budgetId, data}) => {
+    const promise = API.budget.addTransaction({
+        budgetId,
+        data,
+    })
+    return {
+        type: BUDGET_TRANSACTION_ADD,
+        promise,
+        successMessage: 'Transaction has been added!'
     }
 }
    

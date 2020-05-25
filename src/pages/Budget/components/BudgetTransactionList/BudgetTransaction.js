@@ -6,14 +6,22 @@ import { formatCurrency, formatDate } from '../../../../style/index'
 import { useTranslation } from 'react-i18next';
 
 
- function BudgetTransaction({ transactions,allCategories, selectedParentCategoryId }) {
-    const { t, i18n } = useTranslation();
+ function BudgetTransaction({ transactions,allCategories, selectedParentCategoryId, budgetedCategories }) {
+    const {i18n} = useTranslation();
 
 
     const filterTransactionBySelectedParentCategory = (() => {
         if(typeof selectedParentCategoryId === 'undefined'){
             return transactions
         }
+        if(selectedParentCategoryId===null) {
+            return transactions.filter(transaction => {
+                const hasBudgetedCategory = budgetedCategories.some((budgetedCategory) => budgetedCategory.categoryId === transaction.categoryId)
+                return !hasBudgetedCategory;
+            })
+        }
+
+
         return transactions.filter(transaction => {
             try {
                 const category = allCategories.find(category => category.id===transaction.categoryId);
@@ -59,4 +67,5 @@ export default connect(state => ({
     transactions: state.budget.budget.transactions,
     allCategories: state.common.allCategories,
     selectedParentCategoryId: state.budget.selectedParentCategoryId,
+    budgetedCategories: state.budget.budgetedCategories,
 }))(BudgetTransaction)

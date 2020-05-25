@@ -3,13 +3,14 @@ import rootReducer from './reducers/index'
 import { composeWithDevTools } from 'redux-devtools-extension';
 // import thunkMiddleware from 'redux-thunk';
 import promiseMiddleware from '../data/middlewares/promis';
-
+import notificationModdleware from './middlewares/notification';
 
 export default function configureStore(preloadedState) {
 
   const middlewares = [
     // thunkMiddleware,
-    promiseMiddleware
+    promiseMiddleware,
+    notificationModdleware,
   ]
   const middlewareEnhancer = applyMiddleware(...middlewares)
 

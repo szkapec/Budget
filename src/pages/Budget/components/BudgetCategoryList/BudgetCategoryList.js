@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useRef, useMemo, useCallback} from 'react'
 import {connect} from 'react-redux';
 import { groupBy } from 'lodash';
 import { ToggleableList } from 'components';
@@ -12,11 +12,32 @@ import { selectParentCategory } from '../../../../data/actions/budget.action';
   
 
     const { t } = useTranslation();
+    const handleClickParentCategoryRef = useRef(null)
     
-    const budgetedCategoriesByParent = groupBy(budgetedCategories, 
-    item => allCategories.find(category => category.id ===item.categoryId).parentCategory.name) //2 przyjmuje w jaki sposob mamy pogrupowac elementy
+    
+    const budgetedCategoriesByParent = useMemo(() =>  groupBy(budgetedCategories, 
+    item => allCategories.find(category => category.id ===item.categoryId).parentCategory.name
+    ), //2 przyjmuje w jaki sposob mamy pogrupowac elementy
+    [budgetedCategories,allCategories]
+    );
 
-    const listItems = Object.entries(budgetedCategoriesByParent).map(([parentName, categories]) => ({
+    const handleClearParentCategorySelect = useCallback(() => {
+        selectParentCategory();
+        handleClickParentCategoryRef.current()
+    },
+    [handleClickParentCategoryRef,selectParentCategory]
+    );
+
+    const handleSelectRestParentCategories = useCallback(() => {
+        selectParentCategory(null);
+        handleClickParentCategoryRef.current()
+    },
+    [handleClickParentCategoryRef,selectParentCategory]
+    );
+
+
+    const listItems = useMemo(() => 
+        Object.entries(budgetedCategoriesByParent).map(([parentName, categories]) => ({
         id: parentName,
         Triggers: ({onClick}) => (
             <ParentCategory
@@ -42,23 +63,47 @@ import { selectParentCategory } from '../../../../data/actions/budget.action';
                 />
             )
         }),
-    }))
-    if(budget.transactions===undefined) return <div>Błąd połączenia z bazą danych 404 :(</div>;
-    const totalSpent = budget.transactions.reduce((acc, transaction) => acc+transaction.amount,0);
-    const restToSpent = budget.totalAmount - totalSpent
-    const amountTaken = budgetedCategories.reduce((acc,budgetedCategory) => {
+    })), [allCategories,budget.transactions, budgetedCategoriesByParent, selectParentCategory]
+    );
+    
+    const totalSpent = useMemo(
+        () => budget.transactions.reduce((acc, transaction) => acc+transaction.amount,0),
+         [budget.transactions]
+    );
+
+    const restToSpent = useMemo(
+        () => budget.totalAmount - totalSpent,
+        [budget.totalAmount, totalSpent]
+    );
+
+    const amountTaken = useMemo(()=> budgetedCategories.reduce((acc,budgetedCategory) => {
         const categoryTransactions = budget.transactions.filter(transaction => transaction.categoryId===budgetedCategory.id);
         const categoryExpenses = categoryTransactions.reduce((acc,trans) => acc+trans.amount,0);
 
         return acc + Math.max(categoryExpenses, budgetedCategory.budget); //jezeli wieksze bd category to zwroci zategory jesli jinie to budget
-    },0);
+    },0), 
+        [budgetedCategories,budget.transactions]
+    );
+    
+    const notBudgetedTransaction = useMemo(()=>budget.transactions
+        .filter(transaction => !budgetedCategories.find(budgetedCategory => budgetedCategory.id===transaction.categoryId)),
+         [budgetedCategories, budget.transactions]
+    );
 
-    const notBudgetedTransaction = budget.transactions
-        .filter(transaction => !budgetedCategories.find(budgetedCategory => budgetedCategory.id===transaction.categoryId))
+    const notBudgetedExpenses = useMemo(()=>notBudgetedTransaction.reduce((acc, transaction) => acc+transaction.amount,0),
+    [notBudgetedTransaction]
+    );
 
-        const notBudgetedExpenses = notBudgetedTransaction.reduce((acc, transaction) => acc+transaction.amount,0);
-        const availableForRestCategories = budget.totalAmount - amountTaken - notBudgetedExpenses;
-    return (
+    const availableForRestCategories = useMemo(() => budget.totalAmount - amountTaken - notBudgetedExpenses,
+    [budget.totalAmount, amountTaken, notBudgetedExpenses]
+    );
+    
+
+
+    if(budget.transactions===undefined) return <div>Błąd połączenia z bazą danych 404 :(</div>;
+
+
+        return (
         <div>
             <div
                 css={`
@@ -68,10 +113,13 @@ import { selectParentCategory } from '../../../../data/actions/budget.action';
                 <ParentCategory
                 name={budget.name}
                 amount={restToSpent}
+                onClick={handleClearParentCategorySelect}
                 />
             </div>
 
-            <ToggleableList items={listItems}/>
+            <ToggleableList items={listItems}
+                clickRef={handleClickParentCategoryRef}
+            />
             <div
                 css={`
                     border-top: 5px solid ${({theme}) => theme.colors.grey.light};
@@ -80,6 +128,7 @@ import { selectParentCategory } from '../../../../data/actions/budget.action';
                 <ParentCategory
                 name={t('Other categories')}
                 amount={availableForRestCategories}
+                onClick={handleSelectRestParentCategories}
                 />
             </div>
         </div>

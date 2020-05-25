@@ -17,7 +17,6 @@
       "name": "Entertainment"
     }
   ],
-
   "categories": [
     {
       "id": "1",
@@ -60,7 +59,6 @@
       "parentCategoryId": "5"
     }
   ],
-
   "budgetCategories": [
     {
       "id": "1",
@@ -99,7 +97,6 @@
       "budgetId": "1"
     }
   ],
-
   "budgets": [
     {
       "id": "1",
@@ -107,7 +104,6 @@
       "totalAmount": 2400
     }
   ],
-  
   "transactions": [
     {
       "id": "1",
@@ -228,6 +224,38 @@
       "date": "2020-02-20",
       "budgetId": "1",
       "id": "jHBfyjy"
+    },
+    {
+      "description": "new alc",
+      "amount": 1111,
+      "categoryId": "4",
+      "date": "2020-05-25",
+      "budgetId": "1",
+      "id": "_NaNP7b"
+    },
+    {
+      "description": "add new ",
+      "amount": 1231,
+      "categoryId": "7",
+      "date": "2020-05-25",
+      "budgetId": "1",
+      "id": "YyrB0SU"
+    },
+    {
+      "description": "32133",
+      "amount": 132,
+      "categoryId": "2",
+      "date": "2020-05-25",
+      "budgetId": "1",
+      "id": "o56WKbT"
+    },
+    {
+      "description": "dsad",
+      "amount": 23,
+      "categoryId": "2",
+      "date": "2020-05-25",
+      "budgetId": "1",
+      "id": "PUKAa7Z"
     }
   ]
 }

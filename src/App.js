@@ -6,14 +6,20 @@ import theme from './style/theme';
 import { BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {useTranslation} from 'react-i18next';
 import Budget from './pages/Budget';
+import {toast} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+toast.configure();
+
 function App() {
 
-  
+
 
   const {i18n} = useTranslation(); 
   const changeLanguage = useCallback(lng => {
     i18n.changeLanguage(lng);
   }, [i18n]);
+
   return (
     //kazdy komponent ma dostep do obiektu theme
     <>
@@ -34,7 +40,7 @@ function App() {
           <Wrapper>
             <Switch> 
               <Route exact path="/">Home</Route>
-              <Route exact path="/budget"><Budget/></Route>
+              <Route path="/budget"><Budget/></Route>
           </Switch>
           </Wrapper>
       </Router>
